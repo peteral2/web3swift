@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-    spec.name         = 'web3swift'
+    spec.name         = 'web3swiftNDS'
     spec.version      = '2.3.0'
     spec.ios.deployment_target = "9.0"
     spec.osx.deployment_target = "10.11"
