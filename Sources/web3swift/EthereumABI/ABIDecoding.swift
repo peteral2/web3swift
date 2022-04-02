@@ -122,7 +122,7 @@ extension ABIDecoder {
                         toReturn.append(valueUnwrapped)
                         subpointer = subpointer + consumedUnwrapped
                     }
-                    return (toReturn as AnyObject, type.memoryUsage)
+                    return (toReturn as AnyObject, nextElementPointer)
                 } else {
                     // in principle is true for tuple[], so will work for string[] too
                     guard elementItself.count >= 32 else {break}
