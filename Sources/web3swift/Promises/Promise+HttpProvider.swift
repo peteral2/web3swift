@@ -12,10 +12,10 @@ var urlAuthKey = Dictionary<URL,String>()
 extension Web3HttpProvider {
     
     
-    static func setAuthKey(url:URL, authKey:String) {
+    static public func setAuthKey(url:URL, authKey:String) {
         urlAuthKey[url] = authKey
     }
-    static func getAuthKey(url:URL) -> String? {
+    static public func getAuthKey(url:URL) -> String? {
         urlAuthKey[url]
     }
 
