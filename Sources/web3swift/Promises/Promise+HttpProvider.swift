@@ -7,7 +7,17 @@
 import Foundation
 import PromiseKit
 
+var urlAuthKey = Dictionary<URL,String>()
+
 extension Web3HttpProvider {
+    
+    
+    static func setAuthKey(url:URL, authKey:String) {
+        urlAuthKey[url] = authKey
+    }
+    static func getAuthKey(url:URL) -> String? {
+        urlAuthKey[url]
+    }
 
     static func post(_ request: JSONRPCrequest, providerURL: URL, queue: DispatchQueue = .main, session: URLSession) -> Promise<JSONRPCresponse> {
         let rp = Promise<Data>.pending()
@@ -20,6 +30,11 @@ extension Web3HttpProvider {
                 urlRequest.httpMethod = "POST"
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+                
+                if let authkey = getAuthKey(url: providerURL) {
+                    urlRequest.setValue("Authorization", forHTTPHeaderField: "Basic \(authkey)")
+                }
+                
                 urlRequest.httpBody = requestData
                 //  let debugValue = try JSONSerialization.jsonObject(with: requestData, options: JSONSerialization.ReadingOptions(rawValue: 0))
                 //  print(debugValue)
@@ -63,6 +78,9 @@ extension Web3HttpProvider {
                 urlRequest.httpMethod = "POST"
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+                if let authkey = getAuthKey(url: providerURL) {
+                    urlRequest.setValue("Authorization", forHTTPHeaderField: "Basic \(authkey)")
+                }
                 urlRequest.httpBody = requestData
                 //  let debugValue = try JSONSerialization.jsonObject(with: requestData, options: JSONSerialization.ReadingOptions(rawValue: 0))
                 //  print(debugValue)
